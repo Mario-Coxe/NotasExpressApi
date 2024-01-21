@@ -32,7 +32,7 @@ class AuthController extends Controller
             $validateUser = Validator::make(
                 $request->all(),
                 [
-                    'telefone' => 'required',
+                    'phone_number' => 'required',
                     'password' => 'required'
                 ]
             );
@@ -46,7 +46,7 @@ class AuthController extends Controller
             }
 
             // Autenticar manualmente
-            $user = UserLogin::where('telefone', $request->telefone)->first();
+            $user = UserLogin::where('phone_number', $request->phone_number)->first();
 
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response()->json([
