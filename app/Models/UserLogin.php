@@ -12,7 +12,8 @@ class  UserLogin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'user_logins';
 
-    protected $fillable = ['team_id', 'telefone', 'password', 'type_user', 'is_active'];
+    protected $table = 'user_logins';
+    
+    protected $fillable = ['team_id', 'phone_number', 'password', 'type_user', 'is_active'];
 }

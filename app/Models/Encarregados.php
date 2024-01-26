@@ -7,21 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class Disciplina extends Model
+class Encarregados extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'professor_id', 'curso_id'];
+    protected $fillable = ['name', 'is_active', 'sex', 'address', 'email', 'phone_number', 'password', 'photo'];
 
-    public function professor()
-    {
-        return $this->belongsTo(Professor::class);
-    }
-
-    public function curso()
-    {
-        return $this->belongsTo(Curso::class);
-    }
+    protected $casts = [
+        'password' => 'hashed',
+    ];
 
     public function team(): BelongsTo
     {

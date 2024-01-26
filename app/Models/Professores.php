@@ -6,20 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
-class Encarregado extends Model
+class Professores extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'bi', 'telefone', 'password', 'status', 'aluno_id', 'foto'];
-    
+    protected $fillable = ['name', 'is_active', 'sex', 'address', 'email', 'phone_number', 'password', 'photo'];
+
+    /*
+    protected $hidden = [
+        'password',
+    ];
+    */
+
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
-    }
-
-    public function aluno()
-    {
-        return $this->belongsTo(Aluno::class);
     }
 }
