@@ -28,6 +28,10 @@ class Team extends Model
         return $this->hasMany(Aluno::class);
     }
 
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
 
 
     public function disciplinas(): HasMany

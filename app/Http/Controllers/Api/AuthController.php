@@ -11,16 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Facades\Passport;
 use Illuminate\Support\Str;
 
-
 class AuthController extends Controller
 {
-    /**
-     * Create User
-     * @param Request $request
-     * @return UserLogin 
-     */
-    
-
     /**
      * Login The User
      * @param Request $request
@@ -55,6 +47,14 @@ class AuthController extends Controller
                 ], 401);
             }
 
+            // Verificar se o usuário está ativo (is_active == 1)
+            if ($user->is_active != 1) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User is not active.',
+                ], 401);
+            }
+
             // Gerar token usando Passport
             $token = $user->createToken('API TOKEN')->accessToken;
             $shortenedToken = Str::limit($token, 30);
@@ -62,6 +62,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
+                'user' => $user,
                 'token' => $shortenedToken
             ], 200);
         } catch (\Throwable $th) {
