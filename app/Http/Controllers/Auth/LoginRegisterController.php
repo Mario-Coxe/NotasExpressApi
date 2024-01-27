@@ -10,7 +10,7 @@ use Validator;
 
 class LoginRegisterController extends Controller
 {
-     /**
+    /**
      * Register a new UserLogin.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -31,28 +31,33 @@ class LoginRegisterController extends Controller
             'password' => 'required|string'
         ]);
 
-        if($validate->fails()){
+        if ($validate->fails()) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Erro na validação!',
                 'data' => $validate->errors(),
-            ], 403);  
+            ], 403);
         }
 
-        // Check email exist
         $user = UserLogin::where('phone_number', $request->phone_number)->first();
 
-        // Check password
-        if(!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Credencias Incorrectas'
-                ], 401);
+            ], 401);
         }
+        if ($user->is_active != 1) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'User is not active.',
+            ], 401);
+        }
+
 
         $token = $user->createToken($request->phone_number)->plainTextToken;
         $data = $user;
-        
+
         $response = [
             'status' => 'success',
             'message' => 'Usuário logado com suecesso!',
@@ -61,7 +66,7 @@ class LoginRegisterController extends Controller
         ];
 
         return response()->json($response, 200);
-    } 
+    }
 
     /**
      * Log out the user from application.
@@ -75,6 +80,6 @@ class LoginRegisterController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'User is logged out successfully'
-            ], 200);
-    }    
+        ], 200);
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,8 +33,11 @@ Route::controller(ProductController::class)->group(function() {
 // Protected routes of product and logout
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('/logout', [LoginRegisterController::class, 'logout']);
-
  
+});
+
+Route::controller(EventController::class)->group(function() {
+    Route::get('/events/{team_id}', 'show');
 });
 
 Route::controller(StudentController::class)->group(function() {

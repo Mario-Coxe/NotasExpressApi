@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     /**
-     * Get a student by team_id and telefone.
+     * Get a student by team_id and phone_number.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
