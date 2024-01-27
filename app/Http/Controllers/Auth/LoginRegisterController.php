@@ -50,12 +50,13 @@ class LoginRegisterController extends Controller
                 ], 401);
         }
 
-        $data['token'] = $user->createToken($request->phone_number)->plainTextToken;
-        $data['user'] = $user;
+        $token = $user->createToken($request->phone_number)->plainTextToken;
+        $data = $user;
         
         $response = [
             'status' => 'success',
             'message' => 'Usuário logado com suecesso!',
+            'token' => $token,
             'data' => $data,
         ];
 
