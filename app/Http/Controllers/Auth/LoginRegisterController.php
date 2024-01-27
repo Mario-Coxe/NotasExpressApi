@@ -34,7 +34,7 @@ class LoginRegisterController extends Controller
         if($validate->fails()){
             return response()->json([
                 'status' => 'failed',
-                'message' => 'Validation Error!',
+                'message' => 'Erro na validação!',
                 'data' => $validate->errors(),
             ], 403);  
         }
@@ -46,7 +46,7 @@ class LoginRegisterController extends Controller
         if(!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'status' => 'failed',
-                'message' => 'Invalid credentials'
+                'message' => 'Credencias Incorrectas'
                 ], 401);
         }
 
@@ -55,7 +55,7 @@ class LoginRegisterController extends Controller
         
         $response = [
             'status' => 'success',
-            'message' => 'User is logged in successfully.',
+            'message' => 'Usuário logado com suecesso!',
             'data' => $data,
         ];
 

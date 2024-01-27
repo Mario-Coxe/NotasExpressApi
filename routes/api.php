@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -18,8 +19,7 @@ use App\Http\Controllers\Auth\LoginRegisterController;
 
 // Public routes of authtication
 Route::controller(LoginRegisterController::class)->group(function() {
-    Route::post('/register', 'register');
-    Route::post('/login', 'login');
+    Route::post('/auth/login', 'login');
 });
 
 // Public routes of product
@@ -33,9 +33,7 @@ Route::controller(ProductController::class)->group(function() {
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('/logout', [LoginRegisterController::class, 'logout']);
 
-    Route::controller(ProductController::class)->group(function() {
-        Route::post('/products', 'store');
-        Route::post('/products/{id}', 'update');
-        Route::delete('/products/{id}', 'destroy');
+    Route::controller(StudentController::class)->group(function() {
+        Route::get('/students/{team_id}/{phone_number}', 'getByTeamIdAndPhone');
     });
 });
