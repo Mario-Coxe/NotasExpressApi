@@ -12,6 +12,7 @@ class EventController extends Controller
     {
         $events = Eventos::where('team_id', $team_id)
             ->where('is_active', 1)
+            ->orderBy('data_time', 'desc')
             ->get();
 
         if ($events->count() > 0) {
@@ -21,36 +22,21 @@ class EventController extends Controller
         }
     }
 
-
     public function search($team_id, $name = null)
     {
-        if ($name === null || $name === "") {
-            $events = Eventos::where('team_id', $team_id)
-                ->where('is_active', 1)
-                ->get();
+        $eventsQuery = Eventos::where('team_id', $team_id)->where('is_active', 1);
 
-            $response = [
-                'status' => 'success',
-                'message' => 'Todos os eventos',
-                'data' => $events,
-            ];
-        } else {
-            $events = Eventos::where('theme', 'like', '%' . $name . '%')->latest()->get();
-
-            if ($events->isEmpty()) {
-                $response = [
-                    'status' => 'failed',
-                    'message' => 'Evento não encontrado!',
-                ];
-            } else {
-                $response = [
-                    'status' => 'success',
-                    'message' => 'Evento encontrado',
-                    'data' => $events,
-                ];
-            }
+        if ($name !== null && trim($name) !== "") {
+            $eventsQuery->where('theme', 'like', '%' . $name . '%');
         }
 
-        return response()->json($response, 200);
+        $events = $eventsQuery->orderBy('data_time', 'desc')
+            ->get();
+
+        if ($events->isEmpty() && $name !== null) {
+            return response()->json(['message' => 'Nenhum evento encontrado', 'events' => $events], 404);
+        }
+
+        return response()->json(['message' => 'Eventos encontrados', 'events' => $events], 200);
     }
 }
