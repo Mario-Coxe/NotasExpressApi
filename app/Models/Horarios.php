@@ -11,7 +11,7 @@ class Horarios extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['class_id', 'is_active', 'start_time', 'end_time', 'subjet_id', 'trimester_id', 'day_of_week'];
+    protected $fillable = ['class_id', 'is_active', 'start_time', 'end_time', 'subjet_id', 'day_of_week'];
 
     public function team(): BelongsTo
     {
@@ -26,10 +26,5 @@ class Horarios extends Model
     public function disciplinas(): BelongsTo
     {
         return $this->belongsTo(Disciplinas::class, 'subjet_id');
-    }
-
-    public function trimestres(): BelongsTo
-    {
-        return $this->belongsTo(Trimestres::class, 'trimester_id');
     }
 }

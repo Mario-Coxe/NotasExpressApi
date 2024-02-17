@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Api\CalenderController;
+use App\Http\Controllers\Api\HorarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +49,8 @@ Route::controller(StudentController::class)->group(function () {
 
 Route::controller(CalenderController::class)->group(function () {
     Route::get('/calender/{team_id}/{class_id}', 'getCalenderByTeamIdAndClass');
+});
+
+Route::controller(HorarioController::class)->group(function () {
+    Route::get('/horarios/{team_id}/{class_id}', 'show');
 });
