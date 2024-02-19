@@ -39,10 +39,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginRegisterController::class, 'logout']);
 });
 
+/*
+Route::middleware(['auth:sanctum', 'throttle:api'])->prefix('v1/')->group(function () {
+    Route::get('veiculos', [\App\Http\Controllers\VeiculoController::class, 'index']);
+
+});
+*/
 
 Route::controller(EventController::class)->group(function () {
-    Route::get('/events/{team_id}', 'show');
-    Route::get('/events/search/{team_id}/{search?}', 'search');
+    Route::get('/events/{team_id}', 'show')->middleware('auth:sanctum');
+    Route::get('/events/search/{team_id}/{search?}', 'search')->middleware('auth:sanctum');
 });
 
 Route::controller(StudentController::class)->group(function () {
