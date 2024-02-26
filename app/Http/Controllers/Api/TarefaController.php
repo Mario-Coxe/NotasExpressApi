@@ -34,7 +34,10 @@ class TarefaController extends Controller
 
     public function getByTurma($turmaId)
     {
-        $tarefas = Tarefas::where('class_id', $turmaId)->get();
+        $tarefas = Tarefas::where('class_id', $turmaId)
+            ->where('is_active', 1)
+            ->get();
+
         $tarefasPorDisciplina = [];
 
         foreach ($tarefas as $tarefa) {
