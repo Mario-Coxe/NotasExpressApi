@@ -9,7 +9,7 @@ use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Api\CalenderController;
 use App\Http\Controllers\Api\HorarioController;
 use App\Http\Controllers\APi\ProfessorController;
-
+use App\Http\Controllers\APi\TarefaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,4 +65,9 @@ Route::controller(HorarioController::class)->group(function () {
 
 Route::controller(ProfessorController::class)->group(function () {
     Route::get('/professor/{team_id}/{responsible_professor_id}', 'show');
+});
+
+Route::controller(TarefaController::class)->group(function () {
+    Route::post('/homework/create', 'store')->middleware('auth:sanctum');
+    Route::get('/homework/get-by-turma/{class_id}', 'getByTurma')->middleware('auth:sanctum');
 });

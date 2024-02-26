@@ -11,7 +11,7 @@ class Tarefas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['class_id', 'professor_id', 'is_active', 'subject_id', 'due_date', 'description',];
+    protected $fillable = ['team_id','class_id', 'professor_id', 'is_active', 'subject_id', 'due_date', 'description',];
 
     protected $casts = [
         'password' => 'hashed',
